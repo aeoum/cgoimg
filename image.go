@@ -8,7 +8,7 @@ import (
 	"unsafe"
 )
 
-func MD5Hash(path string, size float64) string {
+func MD5(path string, size float64) string {
 	pathParam := C.CString(path)
 	sizeParam := C.double(size)
 	defer C.free(unsafe.Pointer(pathParam))
