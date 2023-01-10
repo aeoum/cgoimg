@@ -4,7 +4,7 @@
 #include <cstdio>
 #include <cstdlib>
 
-const char *CIMGLIB_ImageHash(char *path, double size)
+const char *CIMGLIB_MD5(char *path, double size)
 {
     Image img = Image(path);
     if (img.Open() != Status::ImageOpenSuccess) {

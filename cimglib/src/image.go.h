@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-const char *CIMGLIB_ImageHash(char *path, double size);
+const char *CIMGLIB_MD5(char *path, double size);
 
 #ifdef __cplusplus
 }

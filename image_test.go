@@ -6,7 +6,7 @@ const (
 	defaultSize float64 = 224
 )
 
-func TestMD5Hash(t *testing.T) {
+func TestMD5(t *testing.T) {
 	tt := []struct {
 		name     string
 		path     string
@@ -83,7 +83,7 @@ func TestMD5Hash(t *testing.T) {
 
 	for _, tc := range tt {
 		t.Run(tc.name, func(t *testing.T) {
-			got := MD5Hash(tc.path, tc.size)
+			got := MD5(tc.path, tc.size)
 			if got != tc.expected {
 				t.Fatalf("unexpected error: got=%s but expected=%s\n", got, tc.expected)
 			}
