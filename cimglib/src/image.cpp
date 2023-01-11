@@ -12,7 +12,7 @@
 
 Status Image::Open()
 {
-    img = cv::imread(path, 1);
+    img = cv::imread(path, CV_8S);
     if (img.empty()) {
 	    std::fprintf(stderr, "fatal error: failed to open image");
 	    return Status::ImageOpenFailed;
@@ -36,7 +36,7 @@ Status Image::Resize(Interpolation interpolation, double size)
     	    pillowInterpolation = PillowResize::InterpolationMethods::INTERPOLATION_BILINEAR;
     	}
     	else {
-	    std::fprintf(stderr, "fatal error: invalid interpolation option");
+	    std::fprintf(stderr, "fatal error: interpolation not supported");
     	    return Status::InterpolationNotSupported;
     	}
     	img = PillowResize::resize(img, newSize, pillowInterpolation);
@@ -47,8 +47,8 @@ Status Image::Resize(Interpolation interpolation, double size)
 const std::vector<double> Image::PixelMean()
 {
     std::vector<double> pixelMean;
-    for (size_t i=0; i<img.rows; i++) {
-	for (size_t j=0; j<img.cols; j++) {
+    for (std::size_t i=0; i<img.rows; i++) {
+	for (std::size_t j=0; j<img.cols; j++) {
 	    double r = img.at<cv::Vec3b>(i, j)[2];
 	    double g = img.at<cv::Vec3b>(i, j)[1];
 	    double b = img.at<cv::Vec3b>(i, j)[0];
@@ -61,12 +61,12 @@ const std::vector<double> Image::PixelMean()
 const std::string Image::Hash()
 {
     std::vector<double> pixelMean = PixelMean();
-    for (size_t i=0; i<pixelMean.size(); i++) {
+    for (std::size_t i=0; i<pixelMean.size(); i++) {
 	pixelMean[i] = std::ceil( pixelMean[i] / 4 ) * 4;
     }
     
-    unsigned char result[MD5_DIGEST_LENGTH];
-    MD5((unsigned char *)pixelMean.data(), pixelMean.size() * sizeof(double), result);
+    std::uint8_t result[MD5_DIGEST_LENGTH];
+    MD5((std::uint8_t *)pixelMean.data(), pixelMean.size() * sizeof(double), result);
 
     std::stringstream ss;
     for (int i=0; i<MD5_DIGEST_LENGTH; i++) {

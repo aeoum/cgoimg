@@ -1,4 +1,4 @@
-BIN=md5hash
+BIN=md5frombytes
 
 .PHONY: build
 build:

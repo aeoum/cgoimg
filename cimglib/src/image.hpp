@@ -4,7 +4,9 @@
 #include "status.hpp"
 
 #include <string>
+#include <cstdint>
 #include <opencv2/opencv.hpp>
+#include <opencv2/imgcodecs.hpp>
 
 #define IMG_SIZE 224
 
@@ -16,6 +18,12 @@ public:
 	: path(path)
     {
     }
+
+    Image(std::vector<std::uint8_t>& data, int flag)
+    {
+        img = cv::imdecode(data, flag);
+    }
+
     ~Image()
     {
     }
