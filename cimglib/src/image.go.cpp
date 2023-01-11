@@ -6,7 +6,7 @@
 #include <cstdlib>
 #include <cstdint>
 
-static const char *AllocHash(Image& img)
+const char *AllocHash(Image& img)
 {
     std::string hash = img.Hash();
     char *res = static_cast<char *>(std::malloc(hash.size()));
