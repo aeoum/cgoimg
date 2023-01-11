@@ -180,3 +180,78 @@ func TestMD5FromFile(t *testing.T) {
 		})
 	}
 }
+
+func TestMD5BytesFile(t *testing.T) {
+	tt := []struct {
+		name string
+		path string
+		size float64
+	}{
+		{
+			name: "incorrect image path",
+			path: "AAAAAAAAAAAAAAAA",
+			size: defaultSize,
+		},
+		{
+			name: "0120001c599dc0af44615e7fe8c41b255a0d288d",
+			path: "./testdata/0120001c599dc0af44615e7fe8c41b255a0d288d",
+			size: defaultSize,
+		},
+		{
+			name: "012000204363b62eafe245f624c0cf36518880bb",
+			path: "./testdata/012000204363b62eafe245f624c0cf36518880bb",
+			size: defaultSize,
+		},
+		{
+			name: "01200024995b6fcca6a3f5ee275de74ddd93b4e6",
+			path: "./testdata/01200024995b6fcca6a3f5ee275de74ddd93b4e6",
+			size: defaultSize,
+		},
+		{
+			name: "012000428fdc45ec7ad7e63cc3404627b0d54815",
+			path: "./testdata/012000428fdc45ec7ad7e63cc3404627b0d54815",
+			size: defaultSize,
+		},
+		{
+			name: "01200048007a32201be85bc43aafd7de5526fa25",
+			path: "./testdata/01200048007a32201be85bc43aafd7de5526fa25",
+			size: defaultSize,
+		},
+		{
+			name: "0120004c1a13827989dd9ac19875c1f0719c775b",
+			path: "./testdata/0120004c1a13827989dd9ac19875c1f0719c775b",
+			size: defaultSize,
+		},
+		{
+			name: "0120004f21edb7cfc3184ff572a85c4e5edde6b4",
+			path: "./testdata/0120004f21edb7cfc3184ff572a85c4e5edde6b4",
+			size: defaultSize,
+		},
+		{
+			name: "01200073904a56e3da52af6330c6f380fe235503",
+			path: "./testdata/01200073904a56e3da52af6330c6f380fe235503",
+			size: defaultSize,
+		},
+		{
+			name: "01200074bbb9fb5ba793db0196479fcee8e36176",
+			path: "./testdata/01200074bbb9fb5ba793db0196479fcee8e36176",
+			size: defaultSize,
+		},
+		{
+			name: "0120007f33c98b575290ba9487254cf73f0a6247",
+			path: "./testdata/0120007f33c98b575290ba9487254cf73f0a6247",
+			size: defaultSize,
+		},
+	}
+
+	for _, tc := range tt {
+		t.Run(tc.name, func(t *testing.T) {
+			fileHash := MD5FromFile(tc.path, defaultSize)
+			data, _ := os.ReadFile(tc.path)
+			byteHash := MD5FromBytes(data, defaultSize)
+			if fileHash != byteHash {
+				t.Fatalf("unexpected error: file hash=%v and byte hash=%v", fileHash, byteHash)
+			}
+		})
+	}
+}
