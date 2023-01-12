@@ -5,11 +5,13 @@ package image
 // #include <stdlib.h>
 import "C"
 import (
+	"log"
 	"unsafe"
 )
 
 func MD5FromBytes(data []byte, size float64) string {
 	if len(data) == 0 {
+		log.Println("failed to calculate md5 from bytes: byte array cannot be empty")
 		return ""
 	}
 	hash := C.CIMGLIB_MD5FromBytes((*C.uchar)(&data[0]), C.ulong(len(data)), C.double(size))
@@ -21,6 +23,10 @@ func MD5FromBytes(data []byte, size float64) string {
 }
 
 func MD5FromFile(path string, size float64) string {
+	if path == "" {
+		log.Println("failed to calculate md5 from file: path cannot be empty")
+		return ""
+	}
 	pathParam := C.CString(path)
 	defer C.free(unsafe.Pointer(pathParam))
 	hash := C.CIMGLIB_MD5FromFile(pathParam, C.double(size))
