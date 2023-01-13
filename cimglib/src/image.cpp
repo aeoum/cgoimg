@@ -14,7 +14,8 @@ Status Image::Open()
 {
     img = cv::imread(path, CV_8S);
     if (img.empty()) {
-	    std::fprintf(stderr, "fatal error: failed to open image");
+	    std::fprintf(stderr, "%s failed:%s:%d: couldn't open image %s",
+	        __func__, __FILE__, __LINE__, path.c_str());
 	    return Status::ImageOpenFailed;
     }
     return Status::ImageOpenSuccess;
@@ -36,7 +37,8 @@ Status Image::Resize(Interpolation interpolation, double size)
     	    pillowInterpolation = PillowResize::InterpolationMethods::INTERPOLATION_BILINEAR;
     	}
     	else {
-	    std::fprintf(stderr, "fatal error: interpolation not supported");
+	        std::fprintf(stderr, "%s failed:%s:%d: interpolation not supported",
+	            __func__, __FILE__, __LINE__);
     	    return Status::InterpolationNotSupported;
     	}
     	img = PillowResize::resize(img, newSize, pillowInterpolation);
@@ -48,12 +50,12 @@ const std::vector<double> Image::PixelMean()
 {
     std::vector<double> pixelMean;
     for (std::size_t i=0; i<img.rows; i++) {
-	for (std::size_t j=0; j<img.cols; j++) {
-	    double r = img.at<cv::Vec3b>(i, j)[2];
-	    double g = img.at<cv::Vec3b>(i, j)[1];
-	    double b = img.at<cv::Vec3b>(i, j)[0];
-	    pixelMean.emplace_back(std::floor( (r + g + b) / 3 ));
-	}
+	    for (std::size_t j=0; j<img.cols; j++) {
+	        double r = img.at<cv::Vec3b>(i, j)[2];
+	        double g = img.at<cv::Vec3b>(i, j)[1];
+	        double b = img.at<cv::Vec3b>(i, j)[0];
+	        pixelMean.emplace_back(std::floor( (r + g + b) / 3 ));
+	    }
     }
     return pixelMean;
 }
@@ -62,7 +64,7 @@ const std::string Image::Hash()
 {
     std::vector<double> pixelMean = PixelMean();
     for (std::size_t i=0; i<pixelMean.size(); i++) {
-	pixelMean[i] = std::ceil( pixelMean[i] / 4 ) * 4;
+	    pixelMean[i] = std::ceil( pixelMean[i] / 4 ) * 4;
     }
     
     std::uint8_t result[MD5_DIGEST_LENGTH];
@@ -70,7 +72,7 @@ const std::string Image::Hash()
 
     std::stringstream ss;
     for (int i=0; i<MD5_DIGEST_LENGTH; i++) {
-	ss << std::setfill('0') << std::setw(2) << std::hex << static_cast<int>(result[i]);
+	    ss << std::setfill('0') << std::setw(2) << std::hex << static_cast<int>(result[i]);
     }
     return ss.str();
 }

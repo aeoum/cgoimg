@@ -8,6 +8,11 @@
 
 const char *AllocHash(Image& img)
 {
+    if (img.Hash().size() == 0) {
+        std::fprintf(stderr, "%s failed:%s:%d: hash is empty",
+            __func__, __FILE__, __LINE__);
+        return nullptr;
+    }
     std::string hash = img.Hash();
     char *res = static_cast<char *>(std::malloc(hash.size()));
     sprintf(res, "%s", hash.c_str());

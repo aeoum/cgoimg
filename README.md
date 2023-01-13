@@ -33,6 +33,8 @@ Note that this command might require superuser privileges. The installed locatio
 
     /usr/lib/libcgoimg.so
 
+You could also change to a location that is looked up by LD_LIBRARY_PATH.
+
 ### Running the tests
 Run the tests with the command
 

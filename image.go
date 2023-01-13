@@ -14,12 +14,12 @@ func MD5FromBytes(data []byte, size float64) string {
 		log.Println("failed to calculate md5 from bytes: byte array cannot be empty")
 		return ""
 	}
-	hash := C.CIMGLIB_MD5FromBytes((*C.uchar)(&data[0]), C.ulong(len(data)), C.double(size))
-	if validHashPtr(hash) {
+	pHash := C.CIMGLIB_MD5FromBytes((*C.uchar)(&data[0]), C.ulong(len(data)), C.double(size))
+	if validHashPtr(pHash) {
 		// We only free the hash variable if memory has been allocated!
-		defer C.free(unsafe.Pointer(hash))
+		defer C.free(unsafe.Pointer(pHash))
 	}
-	return C.GoString(hash)
+	return C.GoString(pHash)
 }
 
 func MD5FromFile(path string, size float64) string {
@@ -27,20 +27,20 @@ func MD5FromFile(path string, size float64) string {
 		log.Println("failed to calculate md5 from file: path cannot be empty")
 		return ""
 	}
-	pathParam := C.CString(path)
-	defer C.free(unsafe.Pointer(pathParam))
-	hash := C.CIMGLIB_MD5FromFile(pathParam, C.double(size))
-	if validHashPtr(hash) {
+	pPath := C.CString(path)
+	defer C.free(unsafe.Pointer(pPath))
+	pHash := C.CIMGLIB_MD5FromFile(pPath, C.double(size))
+	if validHashPtr(pHash) {
 		// We only free the hash variable if memory has been allocated!
-		defer C.free(unsafe.Pointer(hash))
+		defer C.free(unsafe.Pointer(pHash))
 	}
-	return C.GoString(hash)
+	return C.GoString(pHash)
 }
 
-func validHashPtr(hash *C.char) bool {
-	emptyStr := C.CString("")
-	defer C.free(unsafe.Pointer(emptyStr))
-	if hash == nil {
+func validHashPtr(pHash *C.char) bool {
+	pEmptyStr := C.CString("")
+	defer C.free(unsafe.Pointer(pEmptyStr))
+	if pHash == nil {
 		return false
 	}
 	return true
