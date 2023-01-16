@@ -1,7 +1,7 @@
 #ifndef CIMGLIB_IMAGE_GO_H
 #define CIMGLIB_IMAGE_GO_H
 
-#include <cstdint>
+#include <stdint.h>
 
 #ifdef __cplusplus
 extern "C" {
