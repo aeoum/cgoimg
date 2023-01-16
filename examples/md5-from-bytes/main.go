@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	image "github.com/aeoum/cgoimg"
+	"github.com/aeoum/cgoimg"
 )
 
 func main() {
@@ -13,8 +13,8 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	hashBytes := image.MD5FromBytes(data, size)
-	hashFile := image.MD5FromFile("../../testdata/01200073904a56e3da52af6330c6f380fe235503", size)
+	hashBytes := cgoimg.MD5FromBytes(data, size)
+	hashFile := cgoimg.MD5FromFile("../../testdata/01200073904a56e3da52af6330c6f380fe235503", size)
 
 	fmt.Printf("Hash from bytes: %v\n", hashBytes)
 	fmt.Printf("Hash from file: %v\n", hashFile)
