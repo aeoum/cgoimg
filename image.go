@@ -1,4 +1,4 @@
-package image
+package cgoimg
 
 // #cgo LDFLAGS: -L. -lcgoimg
 // #include "./cimglib/src/image.go.h"
