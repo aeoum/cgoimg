@@ -4,11 +4,12 @@
 #include "status.hpp"
 
 #include <string>
-#include <cstdint>
 #include <opencv2/opencv.hpp>
 #include <opencv2/imgcodecs.hpp>
 
 #define IMG_SIZE 224
+
+typedef unsigned char uint8;
 
 enum class Interpolation { Bilinear = 0 };
 
@@ -19,7 +20,7 @@ public:
     {
     }
 
-    Image(std::vector<std::uint8_t>& data, int flag)
+    Image(std::vector<uint8>& data, int flag)
     {
         img = cv::imdecode(data, flag);
     }

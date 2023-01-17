@@ -10,6 +10,8 @@
 #include <cstdio>
 #include <cmath>
 
+typedef unsigned char uint8;
+
 Status Image::Open()
 {
     img = cv::imread(path, CV_8S);
@@ -67,8 +69,8 @@ const std::string Image::Hash()
 	    pixelMean[i] = std::ceil( pixelMean[i] / 4 ) * 4;
     }
     
-    std::uint8_t result[MD5_DIGEST_LENGTH];
-    MD5((std::uint8_t *)pixelMean.data(), pixelMean.size() * sizeof(double), result);
+    uint8 result[MD5_DIGEST_LENGTH];
+    MD5((uint8 *)pixelMean.data(), pixelMean.size() * sizeof(double), result);
 
     std::stringstream ss;
     for (int i=0; i<MD5_DIGEST_LENGTH; i++) {

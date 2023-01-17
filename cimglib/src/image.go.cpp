@@ -4,7 +4,8 @@
 #include <vector>
 #include <cstdio>
 #include <cstdlib>
-#include <cstdint>
+
+typedef unsigned char uint8;
 
 const char *AllocHash(Image& img)
 {
@@ -19,9 +20,9 @@ const char *AllocHash(Image& img)
     return res;
 }
 
-const char *CIMGLIB_MD5FromBytes(std::uint8_t *data, std::size_t dataSize, double size)
+const char *CIMGLIB_MD5FromBytes(uint8 *data, std::size_t dataSize, double size)
 {
-    std::vector<std::uint8_t> vec(data, data + dataSize);
+    std::vector<uint8> vec(data, data + dataSize);
     Image img = Image(vec, CV_8S);
     if (img.Resize(Interpolation::Bilinear, size) != Status::ImageResizeSuccess) {
 	    return nullptr;
