@@ -79,6 +79,6 @@ const std::string Image::Hash()
     return ss.str();
     */
     MD5 md5;
-    md5.add(pixelMean.data(), pixelMean.size());
+    md5.add(pixelMean.data(), pixelMean.size() * sizeof(dobuel));
     return md5.getHash();
 }
