@@ -2,7 +2,7 @@
 #include "status.hpp"
 
 #include "../include/pillow_resize.hpp"
-#include "../hash-library/md5.h"
+#include "../src/md5.h"
 
 //#include <openssl/md5.h>
 
