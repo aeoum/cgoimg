@@ -2,8 +2,9 @@
 #include "status.hpp"
 
 #include "../include/pillow_resize.hpp"
+#include "../hash-library/md5.h"
 
-#include <openssl/md5.h>
+//#include <openssl/md5.h>
 
 #include <string>
 #include <sstream>
@@ -68,13 +69,16 @@ const std::string Image::Hash()
     for (std::size_t i=0; i<pixelMean.size(); i++) {
 	    pixelMean[i] = std::ceil( pixelMean[i] / 4 ) * 4;
     }
-    
+    /*
     uint8 result[MD5_DIGEST_LENGTH];
     MD5((uint8 *)pixelMean.data(), pixelMean.size() * sizeof(double), result);
-
     std::stringstream ss;
     for (int i=0; i<MD5_DIGEST_LENGTH; i++) {
 	    ss << std::setfill('0') << std::setw(2) << std::hex << static_cast<int>(result[i]);
     }
     return ss.str();
+    */
+    MD5 md5;
+    md5.add(pixelMean.data(), pixelMean.size());
+    return md5.getHash();
 }
